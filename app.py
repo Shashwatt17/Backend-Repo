@@ -10,7 +10,12 @@ genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 app = Flask(__name__)
 CORS(app)
 
-model = genai.GenerativeModel("models/gemini-1.5-flash")  # ✅ USE THIS MODEL ID
+model = genai.GenerativeModel("models/gemini-1.5-flash")
+
+# ✅ Root route to avoid 404 errors on backend homepage
+@app.route("/")
+def index():
+    return "✅ AI Nutritionist Chatbot Backend is running!"
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -26,4 +31,3 @@ def chat():
 
 if __name__ == "__main__":
     app.run(debug=False, host="0.0.0.0")
-
